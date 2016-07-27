@@ -1,6 +1,10 @@
 
-import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 
+import CircleTreeCalculus
+
 main :: IO ()
-main = mainWith (circle 1 :: Diagram B)
+main = mainWith $ drawLambda $ Lambda "x" (Lambda "y" (x $$ (y $$ y)) $$ Lambda "y" (x $$ (y $$ y)))
+
+-- identity :: LCalc
+-- identity = Lambda "x" x
