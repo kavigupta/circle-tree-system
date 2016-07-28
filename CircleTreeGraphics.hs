@@ -4,19 +4,18 @@ import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 
 import CircleTreeCalculus
-import Data.Maybe
 
 drawLambda :: LCalc -> Diagram B
-drawLambda = drawLambda' 0
+drawLambda = pad 1.1 . drawLambda' 0
 
 drawLambda' :: Int -> LCalc -> Diagram B
 drawLambda' _ (Var name)
-    = circle 1 # fc (vcolor name)
+    = circle 1 # fc (vcolor name) # lw none
 drawLambda' n (Lambda name rest)
     = mappend
         (drawLambda' n rest
             # sizedAs (circle 0.8 :: Diagram B)
-            # centroidify)
+            # center)
         (circle 1
             # lc (vcolor name)
             # lw veryThick
@@ -34,18 +33,15 @@ drawLambda' n (App func var)
                         & arrowShaft .~ shaft
                         & arrowHead .~ noHead
                         & shaftTexture .~ solid black
-                        & shaftStyle %~ lw veryThick)
+                        & shaftStyle %~ lw thick)
                     (2 * n + 1) (2 * n + 2)
     shaft = cubicSpline False ( map p2 [(0, 0), (1, 0.4), (2, 0.4)])
 
-centroidify :: Diagram B -> Diagram B
-centroidify dia = moveOriginTo (fromJust $ boxCenter $ boundingBox dia) dia
-
 scaleAndAnchor :: Diagram B -> Diagram B
-scaleAndAnchor d = d # centroidify # scale (1 / height d)
+scaleAndAnchor d = d # center # scale (1 / height d)
 
 scaleAndAnchorToTop :: Diagram B -> Diagram B
-scaleAndAnchorToTop = translate (r2 (0, -0.5)) . scaleAndAnchor
+scaleAndAnchorToTop = alignT . scaleAndAnchor
 
 vcolor, fcolor :: (Floating a, Ord a) => Variable -> Colour a
 vcolor = fst . vfcolor

@@ -3,8 +3,14 @@ import CircleTreeCalculus
 import CircleTreeOutput
 
 main :: IO ()
-main = writeToFile "eg/y-combinator.svg" 400 $ Lambda X (value ? value)
-    where value = Lambda Y (x ? (y ? y))
+main = do
+    writeToFile "eg/y-combinator.svg" 400 yCombine
+    writeToFile "eg/identity.svg" 400 identity
 
--- identity :: LCalc
--- identity = Lambda "x" x
+identity :: LCalc
+identity = Lambda X x
+
+
+yCombine :: LCalc
+yCombine = Lambda X (value ? value)
+    where value = Lambda Y (x ? (y ? y))
