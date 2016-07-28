@@ -47,15 +47,17 @@ scaleAndAnchor d = d # centroidify # scale (1 / height d)
 scaleAndAnchorToTop :: Diagram B -> Diagram B
 scaleAndAnchorToTop = translate (r2 (0, -0.5)) . scaleAndAnchor
 
-vcolor, fcolor :: (Floating a, Ord a) => String -> Colour a
+vcolor, fcolor :: (Floating a, Ord a) => Variable -> Colour a
 vcolor = fst . vfcolor
 fcolor = snd . vfcolor
 
-vfcolor :: (Floating a, Ord a) => String -> (Colour a, Colour a)
-vfcolor "x" = (red, pink)
-vfcolor "y" = (blue, lightblue)
-vfcolor "z" = (green, lightgreen)
-vfcolor "w" = (purple, mediumpurple)
-vfcolor "t" = (yellow, lightyellow)
-vfcolor _ = (grey, lightgrey)
+vfcolor :: (Floating a, Ord a) => Variable -> (Colour a, Colour a)
+vfcolor X = (red, pink)
+vfcolor Y = (green, lightgreen)
+vfcolor Z = (blue, lightblue)
+vfcolor W = (purple, mediumpurple)
+vfcolor T = (yellow, lightyellow)
+vfcolor A = (brown, sandybrown)
+vfcolor B = (darkorange, orange)
+vfcolor C = (darkcyan, cyan)
 

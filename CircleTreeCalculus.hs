@@ -1,14 +1,17 @@
 module CircleTreeCalculus(
         LCalc(..),
+        Variable(..),
         ($$),
-        x, y, z, w, t
+        x, y, z, w, t, a, b, c
     ) where
 
-data LCalc = Var String | Lambda String LCalc | App LCalc LCalc
+data Variable = X | Y | Z | W | T | A | B | C deriving (Show)
+
+data LCalc = Var Variable | Lambda Variable LCalc | App LCalc LCalc deriving (Show)
 
 infixl 9 $$
 ($$) :: LCalc -> LCalc -> LCalc
 ($$) = App
 
-x, y, z, w, t :: LCalc
-[x, y, z, w, t] = map (Var . return) "xyzwt"
+x, y, z, w, t, a, b, c :: LCalc
+[x, y, z, w, t, a, b, c] = map Var [X, Y, Z, W, T, A, B, C]
