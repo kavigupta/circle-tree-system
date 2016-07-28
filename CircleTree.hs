@@ -1,10 +1,9 @@
 
-import Diagrams.Backend.SVG.CmdLine
-
 import CircleTreeCalculus
+import CircleTreeOutput
 
 main :: IO ()
-main = mainWith $ drawLambda $ Lambda "x" (Lambda "y" (x $$ (y $$ y)) $$ Lambda "y" (x $$ (y $$ y)))
+main = writeToFile "y-combinator.svg" 400 $ Lambda "x" (Lambda "y" (x $$ (y $$ y)) $$ Lambda "y" (x $$ (y $$ y)))
 
 -- identity :: LCalc
 -- identity = Lambda "x" x
