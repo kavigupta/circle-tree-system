@@ -6,7 +6,7 @@ import Diagrams.Backend.SVG.CmdLine
 import CircleTreeCalculus
 
 drawLambda :: LCalc -> Diagram B
-drawLambda = pad 1.1 . drawLambda' 0
+drawLambda = pad 1.1 . center . drawLambda' 0
 
 drawLambda' :: Int -> LCalc -> Diagram B
 drawLambda' _ (Var name)

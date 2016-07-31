@@ -25,7 +25,7 @@ infixr 5 :->:
 data Reduction = LCalc :--: Reduction | LCalc :->: Reduction | Final LCalc
 
 drawReduction :: Reduction -> Diagram B
-drawReduction = renderObjects' FirstStep
+drawReduction = center . renderObjects' FirstStep
     where
     renderObjects' pos (Final term) = position [(lambdaPos pos, drawLambda term # named pos # center)]
     renderObjects' pos (term :->: rest) = twoSegs pos "Burst" term rest
