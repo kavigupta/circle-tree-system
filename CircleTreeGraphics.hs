@@ -1,12 +1,18 @@
-module CircleTreeGraphics (drawLambda) where
+module CircleTreeGraphics (drawCT, DrawCT) where
 
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 
 import CircleTreeCalculus
 
-drawLambda :: LCalc -> Diagram B
-drawLambda = pad 1.1 . center . drawLambda' 0
+class DrawCT a where
+    drawCT :: a -> Diagram B
+
+instance (DrawCT x) => DrawCT [x] where
+    drawCT = hsep 2 . fmap drawCT
+
+instance DrawCT LCalc where
+    drawCT = pad 1.1 . center . drawLambda' 0
 
 drawLambda' :: Int -> LCalc -> Diagram B
 drawLambda' _ (Var name)
