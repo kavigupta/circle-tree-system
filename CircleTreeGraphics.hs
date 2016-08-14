@@ -60,6 +60,5 @@ vfcolor Z = (blue, lightblue)
 vfcolor W = (purple, mediumpurple)
 vfcolor T = (yellow, lightyellow)
 vfcolor A = (brown, sandybrown)
-vfcolor B = (darkorange, orange)
-vfcolor C = (darkcyan, cyan)
+vfcolor B = (darkcyan, cyan)
 
