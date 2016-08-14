@@ -1,8 +1,4 @@
-import Diagrams.Backend.SVG
-
 import Control.Monad
-
-import Diagrams.Prelude
 
 import CircleTreeGraphics
 import CircleTreeCalculus
@@ -34,7 +30,7 @@ main = do
         x ? lambda [X] x |--| x ? lambda [Y] y
     "eg/recolor3.svg" <<<
         x ? lambda [X] (x ? lambda [Z] (x ? lambda [X] x)) |--| x ? lambda [Y] (y ? lambda [Z] (y ? lambda [X] x))
-    renderSVG "eg/recolor-questions.svg" (mkWidth 600) . vsep 1 . map drawCT $ [
+    "eg/recolor-questions.svg" <<< vert [
             x ? lambda [X, Y] (x ? lambda [X] x) |-?-| x ? lambda [Y, Y] (y ? lambda [X] x),
             lambda [X] (x ? y) |-?-| lambda [Z] (z ? y),
             x ? y |-?-| z ? y,

@@ -1,15 +1,23 @@
-module CircleTreeGraphics (drawCT, DrawCT) where
+module CircleTreeGraphics (drawCT, DrawCT, Vertical, vert) where
 
 import Diagrams.Prelude
 import Diagrams.Backend.SVG.CmdLine
 
 import CircleTreeCalculus
 
+newtype Vertical a = Vertical {unVertical :: [a]}
+
+vert :: [a] -> Vertical a
+vert = Vertical
+
 class DrawCT a where
     drawCT :: a -> Diagram B
 
 instance (DrawCT x) => DrawCT [x] where
     drawCT = hsep 2 . fmap drawCT
+
+instance (DrawCT x) => DrawCT (Vertical x) where
+    drawCT = vsep 2 . fmap drawCT . unVertical
 
 instance DrawCT LCalc where
     drawCT = pad 1.1 . center . drawLambda' 0
