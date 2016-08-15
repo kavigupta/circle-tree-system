@@ -14,4 +14,4 @@ alignToLoc :: Diagram B -> Diagram B -> Diagram B
 alignToLoc alignTo dia = dia # translate (centerPoint alignTo .-. centerPoint dia)
 
 questionable :: Diagram B -> Diagram B
-questionable dia = (text "?" # fontSizeL (width dia * 1.25) # lw none # fc purple) # alignToLoc dia # translateY (-width dia * 0.5) <> dia
+questionable dia = (text "?" # fontSizeL (width dia) # lw none # fc purple) # alignToLoc dia # translateY (-width dia * 0.375) <> dia

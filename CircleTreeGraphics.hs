@@ -17,7 +17,7 @@ instance (DrawCT x) => DrawCT [x] where
     drawCT = hsep 2 . fmap drawCT
 
 instance (DrawCT x) => DrawCT (Vertical x) where
-    drawCT = vsep 2 . fmap drawCT . unVertical
+    drawCT = vsep 0.25 . fmap drawCT . unVertical
 
 instance DrawCT LCalc where
     drawCT = pad 1.1 . center . drawLambda' 0
