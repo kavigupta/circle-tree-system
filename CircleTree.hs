@@ -1,5 +1,7 @@
 import Control.Monad
 
+import System.Directory
+
 import CircleTreeGraphics
 import CircleTreeCalculus
 import CircleTreeOutput
@@ -7,77 +9,74 @@ import CircleTreeReductions
 
 main :: IO ()
 main = do
-    "eg/vars.svg" <<< [x, y, z, t, w]
-    "eg/lambdas.svg" <<< [Lambda X x, lambda [X, Y, Z] y, lambda [Y, X] x, lambda [X, X] x]
-    "eg/apps.svg" <<< [x ? x, x ? y ? z, lambda [X] (lambda [X] (x ? lambda [Z] z) ? (y ? z))]
-    "eg/tree.svg" <<< ((x ? y) ? (z ? x)) ? ((x ? y) ? (z ? x))
-    "eg/red-inside-red.svg" <<< lambda [X] x
-    "eg/red-inside-blue.svg" <<< lambda [Z] x
-    "eg/contained1.svg" <<< lambda [X, Y] (x ? y ? z)
-    "eg/contained2.svg" <<< lambda [X] x ? x
-    "eg/contained3.svg" <<< lambda [X] (lambda [X] x ? x)
-    "eg/contained-exercise1.svg" <<<
-        lambda [X] (x ? lambda [Y, Z] (y ? (z ? lambda [Y] (y ? t))) ? lambda [Z] (y ? z))
-    "eg/contained-exercise2.svg" <<<
-        lambda [X] (x ? y) ? lambda [Y] (x ? y)
-    "eg/recolor-example.svg" <<<
+    introArticle
+    when False arithmeticArticle
+
+introArticle :: IO ()
+introArticle = do
+    createDirectoryIfMissing True "intro"
+    "intro/vars.svg" <<< [x, y, z, t, w]
+    "intro/lambdas.svg" <<< [Lambda X x, lambda [X, Y, Z] y, lambda [Y, X] x, lambda [X, X] x]
+    "intro/apps.svg" <<< [x ? x, x ? y ? z, lambda [X] (lambda [X] (x ? lambda [Z] z) ? (y ? z))]
+    "intro/tree.svg" <<< ((x ? y) ? (z ? x)) ? ((x ? y) ? (z ? x))
+    "intro/red-inside-red.svg" <<< lambda [X] x
+    "intro/red-inside-blue.svg" <<< lambda [Z] x
+    "intro/contained-threedots.svg" <<< lambda [X, Y] (x ? y ? z)
+    "intro/contained-outside.svg" <<< lambda [X] x ? x
+    "intro/contained-two-same-color.svg" <<< lambda [X] (lambda [X] x ? x)
+    "intro/contained-exercises.svg" <<< vert [
+            lambda [X] (x ? lambda [Y, Z] (y ? (z ? lambda [Y] (y ? t))) ? lambda [Z] (y ? z)),
+            lambda [X] (x ? y) ? lambda [Y] (x ? y)
+        ]
+    "intro/recolor-example.svg" <<<
         lambda [X, Y] $ x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)
-    "eg/recolor-example-didnt-change-contained.svg" <<<
-        lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) |-!-| lambda [X, B] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y))
-    "eg/recolor-example-changed-contained-in-other.svg" <<<
+    "intro/recolor-example-didnt-change-contained.svg" <<<
+        lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) |-!-| lambda [X, T] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y))
+    "intro/recolor-example-changed-contained-in-other.svg" <<<
         lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) |-!-| lambda [X, T] (x ? t ? lambda [Z] z ? (lambda [W] (w ? t) ? lambda [Y] t))
-    "eg/recolor-example-correct-to-yellow.svg" <<<
+    "intro/recolor-example-correct-to-yellow.svg" <<<
         lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) |--| lambda [X, T] (x ? t ? lambda [Z] z ? (lambda [W] (w ? t) ? lambda [Y] y))
-    "eg/recolor-example-capture-locally-free.svg" <<<
+    "intro/recolor-example-capture-locally-free.svg" <<<
         lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) |-!-| lambda [X, X] (x ? x ? lambda [Z] z ? (lambda [W] (w ? x) ? lambda [Y] y))
-    "eg/recolor-example-correct-to-blue.svg" <<<
+    "intro/recolor-example-correct-to-blue.svg" <<<
         lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) |--| lambda [X, Z] (x ? z ? lambda [Z] z ? (lambda [W] (w ? z) ? lambda [Y] y))
-    "eg/recolor-captured-by-bubble.svg" <<<
+    "intro/recolor-captured-by-bubble.svg" <<<
         lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) |-!-| lambda [X, W] (x ? w ? lambda [Z] z ? (lambda [W] (w ? w) ? lambda [Y] y))
-    "eg/recolor1.svg" <<<
-        lambda [X, Z] (x ? z) |--| lambda [Y, Z] (y ? z)
-    "eg/recolor-invalid1.svg" <<<
-        lambda [X, Z] (x ? z) |-!-| lambda [Z, Z] (z ? z)
-    "eg/recolor-invalid2.svg" <<<
-        lambda [Z, X] (x ? z) |-!-| lambda [Z, Z] (z ? z)
-    "eg/recolor-invalid2.svg" <<<
-        lambda [Z, X] (x ? z) |-!-| lambda [Z, Z] (z ? z)
-    "eg/recolor2.svg" <<<
-        x ? lambda [X] x |--| x ? lambda [Y] y
-    "eg/recolor3.svg" <<<
-        x ? lambda [X] (x ? lambda [Z] (x ? lambda [X] x)) |--| x ? lambda [Y] (y ? lambda [Z] (y ? lambda [X] x))
-    "eg/recolor-questions.svg" <<< vert [
+    "intro/recolor-questions.svg" <<< vert [
             x ? lambda [X, Y] (x ? lambda [X] x) |-?-| x ? lambda [Y, Y] (y ? lambda [X] x),
             lambda [X] (x ? y) |-?-| lambda [Z] (z ? y),
             x ? y |-?-| z ? y,
             lambda [X, X] x |-?-| lambda [Y, X] y
         ]
-    "eg/burst1.svg" <<<
+    "intro/burst1.svg" <<<
         lambda [X, Z] (x ? z) ? y --> lambda [Z] (y ? z)
-    "eg/burst-invalid1.svg" <<<
+    "intro/burst-invalid1.svg" <<<
         lambda [X, Z] (x ? z) ? z -!-> lambda [Z] (z ? z)
-    "eg/burst2.svg" <<<
+    "intro/burst2.svg" <<<
         lambda [X, Y] x ? lambda [Z] z --> lambda [Y, Z] z
-    "eg/burst3.svg" <<<
+    "intro/burst3.svg" <<<
         lambda [X, Y] (x ? lambda [Z] x) ? (w ? t) --> lambda [Y] ((w ? t) ? lambda [Z] (w ? t))
-    "eg/reduce1.svg" <<<
+    "intro/reduce1.svg" <<<
         lambda [X, Z] (x ? z) ? z |--| lambda [X, Y] (x ? y) ? z --> lambda [Y] (z ? y)
-    "eg/pattern-impls.svg" <<< vert [
+    "intro/pattern-impl.svg" <<< vert [
         (x ? y) ? (x ? z),
         (lambda [Y] y ? y) ? (lambda [Y] y ? z),
         (lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) ? y) ? (lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) ? z)]
-    "eg/pattern-abs.svg" <<< vert [
+    "intro/pattern-abs.svg" <<< vert [
         (x ? y) ? (x ? z) <-- lambda [W] ((w ? y) ? (w ? z)) ? x,
         (lambda [Y] y ? y) ? (lambda [Y] y ? z) <-- lambda [W] ((w ? y) ? (w ? z)) ? lambda [Y] y,
         (lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) ? y) ? (lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) ? z)
             <-- lambda [W] ((w ? y) ? (w ? z)) ? lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y))]
-    "eg/pattern.svg" <<< lambda [W] ((w ? y) ? (w ? z))
-    "eg/create1.svg" <<<
+    "intro/pattern.svg" <<< lambda [W] ((w ? y) ? (w ? z))
+    "intro/create1.svg" <<<
         x ? lambda [Y, Z] y --< lambda [Z] (x ? lambda [Y, Z] y ? z)
-    "eg/create-invalid.svg" <<<
+    "intro/create-invalid.svg" <<<
         x ? lambda [Y, Z] y -!-< lambda [X] (x ? lambda [Y, Z] y ? x)
-    "eg/create-burst.svg" <<<
+    "intro/create-burst.svg" <<<
         lambda [X] (x ? lambda [Y, Z] y) --< lambda [Z] (lambda [X] (x ? lambda [Y, Z] y) ? z) --> lambda [Z] (z ? lambda [Y, Z] y) |--| lambda [X] (x ? lambda [Y, Z] y)
+
+arithmeticArticle :: IO ()
+arithmeticArticle = do
     forM_ [0, 1, 2, 3, 13] $ \n ->
         ("eg/" ++ show n ++ ".svg") <<< church X Y n
     "eg/plus.svg" <<<

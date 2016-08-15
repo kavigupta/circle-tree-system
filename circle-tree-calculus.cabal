@@ -18,4 +18,4 @@ cabal-version:       >=1.10
 executable circletree
     main-is: CircleTree.hs
     ghc-options: -Wall -Werror
-    build-depends:       base >=4.8 && <4.9, diagrams >=1.3, diagrams-lib >=1.3, diagrams-svg >=1.3, diagrams-contrib >=1.3
+    build-depends:       base >=4.8 && <4.9, diagrams >=1.3, diagrams-lib >=1.3, diagrams-svg >=1.3, diagrams-contrib >=1.3, directory >=1.2
