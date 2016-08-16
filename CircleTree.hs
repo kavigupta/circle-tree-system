@@ -63,11 +63,11 @@ introArticle = do
         (lambda [Y] y ? y) ? (lambda [Y] y ? z),
         (lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) ? y) ? (lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) ? z)]
     "intro/pattern-abs.svg" <<< vert [
-        (x ? y) ? (x ? z) <-- lambda [W] ((w ? y) ? (w ? z)) ? x,
-        (lambda [Y] y ? y) ? (lambda [Y] y ? z) <-- lambda [W] ((w ? y) ? (w ? z)) ? lambda [Y] y,
+        (x ? y) ? (x ? z) <-- lambda [X] ((x ? y) ? (x ? z)) ? x,
+        (lambda [Y] y ? y) ? (lambda [Y] y ? z) <-- lambda [X] ((x ? y) ? (x ? z)) ? lambda [Y] y,
         (lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) ? y) ? (lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y)) ? z)
-            <-- lambda [W] ((w ? y) ? (w ? z)) ? lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y))]
-    "intro/pattern.svg" <<< lambda [W] ((w ? y) ? (w ? z))
+            <-- lambda [X] ((x ? y) ? (x ? z)) ? lambda [X, Y] (x ? y ? lambda [Z] z ? (lambda [W] (w ? y) ? lambda [Y] y))]
+    "intro/pattern.svg" <<< lambda [X] ((x ? y) ? (x ? z))
     "intro/create1.svg" <<<
         x ? lambda [Y, Z] y --< lambda [Z] (x ? lambda [Y, Z] y ? z)
     "intro/create-invalid.svg" <<<
