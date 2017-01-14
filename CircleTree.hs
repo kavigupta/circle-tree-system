@@ -107,7 +107,7 @@ arithmeticArticle = do
         lambda [X] $ churchBody (church Y Z 2) x 4
     "calc/mult-2-2-2-2-abs.svg" <<<
         church T X 4 ? church Y Z 2
-    "calc/exp-2-4" <<<
+    "calc/exp-2-4.svg" <<<
         (lambda [Z, A] $ a ? z) ? church X Y 2 ? church X Y 4
 
 church :: Variable -> Variable -> Int -> LCalc
