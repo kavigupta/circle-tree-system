@@ -10,7 +10,7 @@ import CircleTreeReductions
 main :: IO ()
 main = do
     introArticle
-    when False arithmeticArticle
+    arithmeticArticle
 
 introArticle :: IO ()
 introArticle = do
@@ -78,31 +78,31 @@ introArticle = do
 arithmeticArticle :: IO ()
 arithmeticArticle = do
     forM_ [0, 1, 2, 3, 13] $ \n ->
-        ("eg/" ++ show n ++ ".svg") <<< church X Y n
-    "eg/plus.svg" <<<
+        ("calc/" ++ show n ++ ".svg") <<< church X Y n
+    "calc/plus.svg" <<<
         lambda [Z, W, T, B] ((z ? t) ? (w ? t ? b))
-    "eg/plus-5-3.svg" <<<
+    "calc/plus-5-3.svg" <<<
         lambda [Z, W, T, B] ((z ? t) ? (w ? t ? b)) ? church X Y 5 ? church X Y 3
-    "eg/plus-5-3-red1.svg" <<<
+    "calc/plus-5-3-red1.svg" <<<
         lambda [Z, W, T, B] ((z ? t) ? (w ? t ? b)) ? church X Y 5 ? church X Y 3
             --> lambda [T, B] ((church X Y 5 ? t) ? (church X Y 3 ? t ? b))
-    "eg/plus-5-3-red2.svg" <<<
+    "calc/plus-5-3-red2.svg" <<<
         lambda [T, B] ((church X Y 5 ? t) ? (church X Y 3 ? t ? b))
             --> lambda [T, B] (lambda [Y] (t ? (t ? (t ? (t ? (t ? y))))) ? (lambda [Y] (t ? (t ? (t ? y))) ? b))
-    "eg/plus-5-3-red3.svg" <<<
+    "calc/plus-5-3-red3.svg" <<<
         lambda [T, B] (lambda [Y] (churchBody t y 5) ? (lambda [Y] (churchBody t y 3) ? b))
             --> lambda [T, B] (lambda [Y] (churchBody t y 5) ? churchBody t b 3)
             --> church T B 8
-    "eg/plus-2-2-2-2.svg" <<<
+    "calc/plus-2-2-2-2.svg" <<<
         let two = (lambda [Z] (churchBody x z 2) ?) in
             lambda [X, Y] . two . two . two . two $ y
-    "eg/plus-2-2-2-2-abs2.svg" <<<
+    "calc/plus-2-2-2-2-abs2.svg" <<<
         lambda [X] $ church A Y 4 ? (lambda [Y, Z] (churchBody y z 2) ? x)
-    "eg/plus-2-2-2-2-abs3.svg" <<<
+    "calc/plus-2-2-2-2-abs3.svg" <<<
         lambda [Y, Z, X] (y ? (z ? x)) ? church Y Z 4 ? church Y Z 2
-    "eg/mult-2-2-2-2.svg" <<<
+    "calc/mult-2-2-2-2.svg" <<<
         lambda [X] $ churchBody (church Y Z 2) x 4
-    "eg/mult-2-2-2-2-abs.svg" <<<
+    "calc/mult-2-2-2-2-abs.svg" <<<
         church T X 4 ? church Y Z 2
 
 church :: Variable -> Variable -> Int -> LCalc
