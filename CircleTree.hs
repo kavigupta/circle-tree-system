@@ -80,19 +80,19 @@ arithmeticArticle = do
     forM_ [0, 1, 2, 3, 13] $ \n ->
         ("calc/" ++ show n ++ ".svg") <<< church X Y n
     "calc/plus.svg" <<<
-        lambda [Z, W, T, B] ((z ? t) ? (w ? t ? b))
+        lambda [Z, X, A, Y] ((z ? a) ? (x ? a ? y))
     "calc/plus-5-3.svg" <<<
-        lambda [Z, W, T, B] ((z ? t) ? (w ? t ? b)) ? church X Y 5 ? church X Y 3
+        lambda [Z, X, A, Y] ((z ? a) ? (x ? a ? y)) ? church X Z 5 ? church X Z 3
     "calc/plus-5-3-red1.svg" <<<
-        lambda [Z, W, T, B] ((z ? t) ? (w ? t ? b)) ? church X Y 5 ? church X Y 3
-            --> lambda [T, B] ((church X Y 5 ? t) ? (church X Y 3 ? t ? b))
+        lambda [Z, X, A, Y] ((z ? a) ? (x ? a ? y)) ? church X Z 5 ? church X Z 3
+            --> lambda [A, Y] ((church X Z 5 ? a) ? (church X Z 3 ? a ? y))
     "calc/plus-5-3-red2.svg" <<<
-        lambda [T, B] ((church X Y 5 ? t) ? (church X Y 3 ? t ? b))
-            --> lambda [T, B] (lambda [Y] (t ? (t ? (t ? (t ? (t ? y))))) ? (lambda [Y] (t ? (t ? (t ? y))) ? b))
+        lambda [A, Y] ((church X Z 5 ? a) ? (church X Z 3 ? a ? y))
+            --> lambda [A, Y] (lambda [Z] (churchBody a z 5) ? (lambda [Z] (churchBody a z 3) ? y))
     "calc/plus-5-3-red3.svg" <<<
-        lambda [T, B] (lambda [Y] (churchBody t y 5) ? (lambda [Y] (churchBody t y 3) ? b))
-            --> lambda [T, B] (lambda [Y] (churchBody t y 5) ? churchBody t b 3)
-            --> church T B 8
+        lambda [A, Y] (lambda [Z] (churchBody a z 5) ? (lambda [Z] (churchBody a z 3) ? y))
+            --> lambda [A, Y] (lambda [Z] (churchBody a z 5) ? churchBody a y 3)
+            --> church A Y 8
     "calc/plus-2-2-2-2.svg" <<<
         let two = (lambda [Z] (churchBody x z 2) ?) in
             lambda [X, Y] . two . two . two . two $ y
