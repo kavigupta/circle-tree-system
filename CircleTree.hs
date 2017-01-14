@@ -96,6 +96,9 @@ arithmeticArticle = do
     "calc/plus-2-2-2-2.svg" <<<
         let two = (lambda [Z] (churchBody x z 2) ?) in
             lambda [X, Y] . two . two . two . two $ y
+    "calc/plus-2-2-2-2-abs.svg" <<<
+        let two = (lambda [Z] (churchBody x z 2)) in
+            lambda [X] $ lambda [A] (lambda [Y] . (a ?) . (a ?) . (a ?) . (a ?) $ y) ? two
     "calc/plus-2-2-2-2-abs2.svg" <<<
         lambda [X] $ church A Y 4 ? (lambda [Y, Z] (churchBody y z 2) ? x)
     "calc/plus-2-2-2-2-abs3.svg" <<<
