@@ -21,4 +21,4 @@ infixr 0 <<<
 (<<<) :: (DrawCT x) => String -> x -> CircleTreeOutput
 fname <<< toDraw = do
     directory <- ask
-    liftIO . renderSVG (directory </> fname) (mkWidth 500) . drawCT $ toDraw
+    liftIO . renderSVG (directory </> fname <.> "svg") (mkWidth 500) . drawCT $ toDraw
