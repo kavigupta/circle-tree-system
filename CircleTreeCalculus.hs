@@ -8,7 +8,7 @@ module CircleTreeCalculus(
 
 data Variable = X | Y | Z | W | T | A | B deriving (Show)
 
-data LCalc = Var Variable | Lambda Variable LCalc | App LCalc LCalc deriving (Show)
+data LCalc = Labeled Char | Var Variable | Lambda Variable LCalc | App LCalc LCalc deriving (Show)
 
 lambda :: [Variable] -> LCalc -> LCalc
 lambda = foldr ((.) . Lambda) id

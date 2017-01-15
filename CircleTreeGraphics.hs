@@ -22,9 +22,14 @@ instance (DrawCT x) => DrawCT (Vertical x) where
 instance DrawCT LCalc where
     drawCT = pad 1.1 . center . drawLambda' 0
 
+varDot :: Colour Double -> Diagram B
+varDot color = circle 1 # fc color # lw none
+
 drawLambda' :: Int -> LCalc -> Diagram B
+drawLambda' _ (Labeled label)
+    = text [label] # fontSizeL 2 # translateY (-0.7) # fc white <> varDot black
 drawLambda' _ (Var name)
-    = circle 1 # fc (vcolor name) # lw none
+    = varDot (vcolor name)
 drawLambda' n (Lambda name rest)
     = mappend
         (drawLambda' n rest
