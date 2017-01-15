@@ -74,4 +74,3 @@ vfcolor W = (purple, mediumpurple)
 vfcolor T = (yellow, lightyellow)
 vfcolor A = (brown, sandybrown)
 vfcolor B = (darkcyan, cyan)
-
