@@ -1,7 +1,7 @@
 module CircleTreeReductions(
-        (|--|),  (-->),  (<--),  (--<),
-        (|-?-|), (-?->), (<-?-), (-?-<),
-        (|-!-|), (-!->), (<-!-), (-!-<)
+        (|--|),  (-->),  (<--),  (--<), (====),
+        (|-?-|), (-?->), (<-?-), (-?-<), (=?=),
+        (|-!-|), (-!->), (<-!-), (-!-<), (=!=)
     ) where
 
 import Diagrams.Prelude
@@ -10,9 +10,9 @@ import Diagrams.Backend.SVG.CmdLine
 import CircleTreeGraphics
 import CircleTreeHelpers
 
-infixr 5 |--|, -->, <--, --<, |-?-|, -?->, <-?-, -?-<, |-!-|, -!->, <-!-, -!-<
+infixr 5 |--|, -->, <--, --<, |-?-|, -?->, <-?-, -?-<, |-!-|, -!->, <-!-, -!-<, ====, =?=, =!=
 
-(|--|), (-->), (<--), (--<), (|-?-|), (-?->), (<-?-), (-?-<), (|-!-|), (-!->), (<-!-), (-!-<) :: LCalc -> rest -> RedCT rest
+(|--|), (-->), (<--), (--<), (|-?-|), (-?->), (<-?-), (-?-<), (|-!-|), (-!->), (<-!-), (-!-<), (====), (=?=), (=!=) :: LCalc -> rest -> RedCT rest
 (|--|) = RedCT "Recolor" LR Valid
 (|-?-|) = RedCT "Recolor" LR Question
 (|-!-|) = RedCT "Recolor" LR Invalid
@@ -25,6 +25,9 @@ infixr 5 |--|, -->, <--, --<, |-?-|, -?->, <-?-, -?-<, |-!-|, -!->, <-!-, -!-<
 (--<) = RedCT "Create" R Valid
 (-?-<) = RedCT "Create" R Question
 (-!-<) = RedCT "Create" R Invalid
+(====) = RedCT "Equal" LR Valid
+(=?=) = RedCT "Equal" LR Question
+(=!=) = RedCT "Equal" LR Invalid
 
 data Dir = L | R | LR
 
