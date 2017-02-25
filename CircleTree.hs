@@ -9,6 +9,7 @@ main :: IO ()
 main = do
     introArticle
     arithmeticArticle
+    pairArticle
 
 introArticle :: IO ()
 introArticle = runOutput "intro" $ do
@@ -106,6 +107,28 @@ arithmeticArticle = runOutput "calc" $ do
         church T X 4 ? church Y Z 2
     "exp-2-4" <<<
         lambda [Z, A] (a ? z) ? church X Y 2 ? church X Y 4
+
+pairArticle :: IO ()
+pairArticle = runOutput "pair" $ do
+    let (cons, first, second) = (Labeled 'C', Labeled 'F', Labeled 'S')
+    "cons-first-second" <<< [cons, first, second]
+    "pair-rules" <<< vert [first ? (cons ? x ? y) --> x, second ? (cons ? x ? y) --> y]
+    "cons-is-app" <<< x ? z
+    "cons-real" <<< Labeled 'S' ? x ? z
+    "unwrapped-first-pair" <<< lambda [Y, B] y ? x ? z --> lambda [B] x ? z --> x
+    "unwrapped-second-pair" <<< lambda [Y, B] b ? x ? z --> lambda [B] b ? z --> z
+    let consxz = lambda [Y] (y ? x ? z)
+    let consf = lambda [X, Z, Y] (y ? x ? z)
+    "fst-snd-of-cons" <<< vert (((consxz ?) . lambda [X, Y]) <$> [x, y])
+    "pair-x-z" <<< consxz
+    "cons-x-z" <<< consf ? x ? z
+    "cons-defn" <<< cons ==== consf
+    "fst-snd-of-cons-abs" <<<
+        let go var sym = consxz ? lambda [X, Y] var <-- lambda [Z] (z ? lambda [X, Y] var) ? consxz ==== sym ? consxz
+        in vert $ zipWith go [x, y] [first, second]
+    let (truef, falsef) = (lambda [X, Y] x, lambda [X, Y] y)
+    let (fstf, sndf) = (lambda [Z] $ z ? truef, lambda [Z] $ z ? falsef)
+    "pair-impls" <<< vert $ zipWith (====) [cons, first, second] [consf, fstf, sndf]
 
 church :: Variable -> Variable -> Int -> LCalc
 church v1 v2 = lambda [v1, v2] . churchBody (Var v1) (Var v2)
