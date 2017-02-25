@@ -52,7 +52,7 @@ drawLambda' n (App func var)
                         & arrowShaft .~ shaft
                         & arrowHead .~ noHead
                         & shaftTexture .~ solid black
-                        & shaftStyle %~ lwL 1)
+                        & shaftStyle %~ lwO 1)
                     (2 * n + 1) (2 * n + 2)
     shaft = cubicSpline False ( map p2 [(0, 0), (1, 0.4), (2, 0.4)])
 
